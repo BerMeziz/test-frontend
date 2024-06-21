@@ -7,14 +7,14 @@ import Link from "next/link";
 interface IContact {
   icons: string;
   label: string;
-  href: string;
+  href: string|null;
 }
 export default function Navbar2() {
   const contact: IContact[] = [
     {
       icons: "person",
       label: "Username",
-      href: "/"
+      href: null
     },
     {
       icons: "local_mall",
@@ -39,7 +39,7 @@ export default function Navbar2() {
         <div className="flex gap-2 pr-8">
           {contact.map((items, index) => (
             <div key={index} className="flex gap-2 pt-4 cursor-pointer">
-              <Link className="flex gap-2" href ={items.href}>
+              <Link className="flex gap-2" href ={items.href ? items.href:""}>
               <span className="material-symbols-outlined">{items.icons}</span>
               <p>{items.label}</p>|
               </Link>
