@@ -2,6 +2,8 @@
 import React from "react";
 import { useState } from "react";
 import Image from "next/image";
+import { useDispatch } from "@/store";
+import { fetchPokemonSearchAsync, searchNameSlice } from "@/store/features/searchoff";
 
 const pokemonData = [
   {id: 1, name: 'Bulbasaur', image: '/public/img/bulbasaur.jpg'},
@@ -9,7 +11,8 @@ const pokemonData = [
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
+  const dispatch = useDispatch();
+  
   const handleSearch = () => {
     const results = pokemonData.filter(pokemon => 
       `pokemon.name.toLowerCase().includes(searchQuery,toLowerCase())`
@@ -18,9 +21,13 @@ export default function SearchBar() {
   }
 
  
-  const handleInputChang = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChang = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
     handleSearch();
+
+    dispatch(searchNameSlice.actions.setSearch(e.target.value))
+    
+
   };
 
   return (
